@@ -6,7 +6,6 @@ function create_text(_node, _file) {
         ChatterboxJump(chatterbox, _node);
         
         // Get Content from Chatterbox
-        text = ChatterboxGetContent(chatterbox, 0);
-        nodeTitle = ChatterboxGetCurrent(chatterbox); 
+        refresh_text_elements();
     }
 }

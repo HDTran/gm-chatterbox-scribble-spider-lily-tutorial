@@ -1,4 +1,4 @@
-//Load your file.
+// Load your file
 ChatterboxLoadFromFile("chatterboxtut.yarn");
 
 // Create Chatterbox
@@ -8,5 +8,8 @@ chatterbox = ChatterboxCreate("chatterboxtut.yarn");
 ChatterboxJump(chatterbox, "Start");
 
 // Get Content from Chatterbox
-text = ChatterboxGetContent(chatterbox, 0);
-nodeTitle = ChatterboxGetCurrent(chatterbox);
+refresh_text_elements();
+
+current_text = undefined;
+hovering = -1;
+activeRegion = 0;

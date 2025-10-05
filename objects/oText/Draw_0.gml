@@ -1,19 +1,38 @@
-var _x = 100;
-var _y = 100;
-var _opty = 150;
-
 if (ChatterboxIsStopped(chatterbox)) { 
     instance_destroy(self);
 } else { 
-    draw_text(_x, _y, text);
-    
-    if (ChatterboxGetOptionCount(chatterbox)) > 0 {
-        for (var _i = 0; _i < ChatterboxGetOptionCount(chatterbox); _i++) {
-            var _option = string(_i+1) + ": " + ChatterboxGetOption(chatterbox, _i);
-            
-            //_i starts at 0, but we want the choices to be numbered 1–2–3 not 0–1–2, so we +1 to it when we make our string to draw. 
-            draw_text(_x, _opty, _option);
-            _opty += 30;
+    var _i = 0;
+    repeat(array_length(text_elements)) {
+        // get our text element and position
+        var _array = text_elements[_i];
+        var _x = _array[0];
+        var _y = _array[1];
+        var _element = _array[2];
+        var _typist = _array[3];
+        
+        // draw the text element
+        _element.draw(_x, _y, _typist);
+        
+        var thisRegion = _element.region_detect(_x, _y, InputMouseRoomX(), InputMouseRoomY());
+        
+        if (thisRegion != undefined) {
+            _element.region_set_active(thisRegion, c_yellow, 1);
+            activeRegion += 1;
+            hovering = thisRegion;
+        } else {
+            _element.region_set_active(undefined, c_yellow, 1);
         }
+        
+        // break out of the loop if this text element hasn't finished fading in
+        if (_typist.get_state() < 1.0) {
+            break;
+        }
+        
+        ++_i;
+    }
+    
+    if activeRegion <= 0 {
+        //If there were no active regions this frame, set hovering to -1;
+        hovering = -1;
     }
 }
